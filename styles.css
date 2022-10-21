@@ -1,0 +1,46 @@
+:root {
+    box-sizing: border-box;
+    --cell-border-width: 1px;
+    --grid-dimension: max(min(50vw, 50vh), 300px);
+    --tic-size: calc(var(--grid-dimension) / 3 * 0.75);
+    --gap: 20px;
+}
+
+body {
+    text-align: center;
+    height: 100vh;
+    min-width: fit-content;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+header * {
+    margin: 0;
+}
+
+#message {
+    margin-bottom: -20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#gameboard {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    width: calc(var(--grid-dimension) + 1px);
+    /* keep the grid height == width to maintain a square shape */
+    height: calc(var(--grid-dimension) - 1px);
+    border: var(--cell-border-width) solid black;
+}
+
+#gameboard .cell {
+    border: var(--cell-border-width) solid black;
+    font-size: var(--tic-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

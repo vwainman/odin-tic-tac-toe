@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odin Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="tictactoe.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Tic-Tac-Toe</h1>
+        <h2>Round: <strong id="round">0</strong></h2>
+        <h3>Player 'X' score: <strong id="player-X-score">0</strong><br>
+            Player 'O' score: <strong id="player-O-score">0</strong>
+        </h3>
+    </header>
+    <div id="message"></div>
+    <div id="gameboard">
+        <div class="cell" data-row="0" data-col="0"></div>
+        <div class="cell" data-row="0" data-col="1"></div>
+        <div class="cell" data-row="0" data-col="2"></div>
+        <div class="cell" data-row="1" data-col="0"></div>
+        <div class="cell" data-row="1" data-col="1"></div>
+        <div class="cell" data-row="1" data-col="2"></div>
+        <div class="cell" data-row="2" data-col="0"></div>
+        <div class="cell" data-row="2" data-col="1"></div>
+        <div class="cell" data-row="2" data-col="2"></div>
+    </div>
+    <button id="new-round">New Round</button>
+    <button id="new-game">New Game</button>
+    <footer class="footer">
+        <a href="https://github.com/vwainman" target="_blank">
+            <i class="fab fa-github"></i></a>
+    </footer>
+</body>
+
+</html>
