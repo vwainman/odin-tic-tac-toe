@@ -1,12 +1,14 @@
 :root {
-    box-sizing: border-box;
     --cell-border-width: 1px;
-    --grid-dimension: max(min(50vw, 50vh), 300px);
+    --grid-dimension: min(50vw, 50vh);
+    --min-grid-dimension: 300px;
     --tic-size: calc(var(--grid-dimension) / 3 * 0.75);
     --gap: 20px;
+    --message-font-size: 20px;
 }
 
 body {
+    box-sizing: border-box;
     text-align: center;
     height: 100vh;
     min-width: fit-content;
@@ -15,7 +17,7 @@ body {
     overflow: hidden;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: var(--gap);
 }
 
 header * {
@@ -23,17 +25,21 @@ header * {
 }
 
 #message {
-    margin-bottom: -20px;
-    font-size: 20px;
+    /* undo gap */
+    margin-bottom: calc(var(--gap) * -1);
+    font-size: var(--message-font-size);
     font-weight: bold;
 }
 
 #gameboard {
     display: grid;
+    box-sizing: content-box;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    width: calc(var(--grid-dimension) + 1px);
+    width: var(--grid-dimension);
+    height: var(--grid-dimension);
     /* keep the grid height == width to maintain a square shape */
-    height: calc(var(--grid-dimension) - 1px);
+    min-width: var(--min-grid-dimension);
+    min-height: var(--min-grid-dimension);
     border: var(--cell-border-width) solid black;
 }
 

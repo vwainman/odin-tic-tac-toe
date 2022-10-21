@@ -6,6 +6,7 @@ class Player {
         this.pieceType = pieceType;
         this.piecesPlayed = 0;
         this.lastPiecePlayed = { "x": null, "y": null };
+        this.isHuman = isHuman;
     }
     toString() { return `Player ${this.pieceType}`; }
     resetPiecesPlayed() { this.piecesPlayed = 0; }
@@ -22,12 +23,18 @@ class Player {
         }
         return false;
     }
+    optimalPlay() {
+        // 1. try to find a one piece away tic-tac-toe
+        // 2. if none can be found, try to find if the opponent is near a tic-tac-toe
+        // 3.
+    }
     resetAll() {
         this.roundsWon = 0;
         this.piecesPlayed = 0;
         this.lastPiecePlayed = { "x": null, "y": null };
     }
     getLastPiecePlayed() { return this.lastPiecePlayed; }
+    playerIsHuman() { return this.isHuman; }
 }
 
 // controls the board (backend) - get, set and reset
