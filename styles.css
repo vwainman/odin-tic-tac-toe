@@ -2,22 +2,37 @@
     --cell-border-width: 1px;
     --grid-dimension: min(50vw, 50vh);
     --min-grid-dimension: 300px;
-    --tic-size: calc(var(--grid-dimension) / 3 * 0.75);
+    --tic-size: calc(var(--grid-dimension) / 3 * 0.65);
     --gap: 20px;
     --message-font-size: 20px;
+    --footer-height: 40px;
 }
 
 body {
+    overflow: hidden;
+}
+
+#content {
     box-sizing: border-box;
     text-align: center;
-    height: 100vh;
+    min-height: calc(98vh - var(--footer-height));
     min-width: fit-content;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     justify-content: center;
     align-items: center;
     gap: var(--gap);
+}
+
+#footer {
+    height: var(--footer-height);
+    display: flex;
+    font-size: var(--footer-height);
+    justify-content: center;
+}
+
+.fab {
+    color: black;
 }
 
 header * {
@@ -25,28 +40,32 @@ header * {
 }
 
 #message {
-    /* undo gap */
-    margin-bottom: calc(var(--gap) * -1);
     font-size: var(--message-font-size);
     font-weight: bold;
 }
 
 #gameboard {
     display: grid;
-    box-sizing: content-box;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
     width: var(--grid-dimension);
     height: var(--grid-dimension);
     /* keep the grid height == width to maintain a square shape */
     min-width: var(--min-grid-dimension);
     min-height: var(--min-grid-dimension);
-    border: var(--cell-border-width) solid black;
 }
 
 #gameboard .cell {
-    border: var(--cell-border-width) solid black;
     font-size: var(--tic-size);
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.border-r {
+    border-right: var(--cell-border-width) solid black;
+}
+
+.border-d {
+    border-bottom: var(--cell-border-width) solid black;
 }

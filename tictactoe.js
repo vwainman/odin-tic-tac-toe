@@ -13,7 +13,7 @@ class Player {
     addWin() { this.roundsWon++; }
     getRoundsWon() { return this.roundsWon; }
     getPieceType() { return this.pieceType; }
-    playPieceSuccess(x, y) {
+    playPiece(x, y) {
         const attemptSuccesful = gameBoard.setPiece(x, y, this.pieceType);
         if (attemptSuccesful) {
             this.piecesPlayed++;
@@ -23,10 +23,24 @@ class Player {
         }
         return false;
     }
-    optimalPlay() {
-        // 1. try to find a one piece away tic-tac-toe
-        // 2. if none can be found, try to find if the opponent is near a tic-tac-toe
-        // 3.
+    miniMax(game) {
+        // if game state is over, return the score from the player's perspective
+        // else:
+        // get an array of game states for every possible move
+        // create an array of scores
+        // for each game state, add the minimax result of that state to the scores array
+        // if it's my simulated turn, return the maximum score
+        // if it's my opponent's simulated turn, return the minimum score
+
+        function scoreSimulatedGame(winner) {
+            if (this === winner) {
+                return 10;
+            } else if (winner === 'none') { // a tie occurs
+                return 0
+            } else {
+                return -10;
+            }
+        }
     }
     resetAll() {
         this.roundsWon = 0;
@@ -104,7 +118,7 @@ const gameBoard = (() => {
     const hasDiagonalWin = () => {
         let leftDiagonalWin = true;
         let rightDiagonalWin = true;
-        // check left to right diagonal, if necessary
+        // check left to right diagonal
         for (let y = 1; y < board.length; y++) {
             if (board[y][y] !== board[0][0] || board[0][0] === "") {
                 leftDiagonalWin = false;
@@ -209,7 +223,7 @@ const gameController = (() => {
         cell.addEventListener("click", (e) => {
             const x = e.target.dataset.row;
             const y = e.target.dataset.col;
-            if (currentPlayer.playPieceSuccess(x, y)) {
+            if (currentPlayer.playPiece(x, y)) {
                 moveGameForward(currentPlayer);
             }
         })
