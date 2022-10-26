@@ -52,10 +52,6 @@ i {
     background-color: #227cad !important;
 }
 
-body {
-    overflow: hidden;
-}
-
 #intro-UI {
     text-align: center;
     display: flex;
