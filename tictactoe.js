@@ -33,6 +33,7 @@ class Player {
         this.roundsWon = 0;
         this.piecesPlayed = 0;
         this.lastPiecePlayed = { "x": null, "y": null };
+        this.isHuman = true;
     }
     getLastPiecePlayed() { return this.lastPiecePlayed; }
     getIsHuman() { return this.isHuman; }
@@ -242,6 +243,8 @@ const gameBoard = (() => {
         });
         piecesOnBoard = 0;
         boardState = "inplay";
+        winner = null;
+        savedBoardState = {};
     };
 
     const getCellCount = () => { return cellCount; };
@@ -405,8 +408,10 @@ const gameController = (() => {
         }
     }
 
-    const nextTurn = () => {
-        currentPlayer = (currentPlayer === playerX) ? playerO : playerX;
+    const nextTurn = (firstTurn = false) => {
+        if (!firstTurn) {
+            currentPlayer = (currentPlayer === playerX) ? playerO : playerX;
+        }
         displayController.displayTurnMessage(currentPlayer);
         if (!currentPlayer.getIsHuman()) {
             const coord = getComputerPlay();
@@ -416,13 +421,15 @@ const gameController = (() => {
     }
 
     const newRound = () => {
-        // currentPlayer = players[Math.round(Math.random())];
-        currentPlayer = players[1];
+        currentPlayer = players[Math.round(Math.random())];
         gameBoard.reset();
         displayController.resetBoard();
         playerX.resetPiecesPlayed();
         playerO.resetPiecesPlayed();
         displayController.displayTurnMessage(currentPlayer);
+        if (!currentPlayer.getIsHuman()) {
+            nextTurn(true);
+        }
     }
 
     const getComputerPlay = () => {
@@ -446,10 +453,8 @@ const gameController = (() => {
     const updatePlayerSettings = (playerSymbol, gameMode) => {
         if (gameMode === "ai-mode") {
             if (playerSymbol === "X") {
-                console.log("playerO is being set to AI")
                 playerO.setToAI();
             } else if (playerSymbol === "O") {
-                console.log("playerX is being set to AI")
                 playerX.setToAI();
             } else {
                 throw new Error(`Invalid player symbol ${playerSymbol}`);
