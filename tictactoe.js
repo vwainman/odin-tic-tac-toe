@@ -399,8 +399,6 @@ const gameController = (() => {
     }
 
     const endRound = (lastPlayer) => {
-        roundsPlayed++;
-        displayController.updateRound(roundsPlayed);
         if (gameBoard.getBoardState() === "won") {
             lastPlayer.addWin();
             displayController.updateScore(lastPlayer);
@@ -426,6 +424,8 @@ const gameController = (() => {
         displayController.resetBoard();
         playerX.resetPiecesPlayed();
         playerO.resetPiecesPlayed();
+        roundsPlayed++;
+        displayController.updateRound(roundsPlayed);
         displayController.displayTurnMessage(currentPlayer);
         if (!currentPlayer.getIsHuman()) {
             nextTurn(true);
