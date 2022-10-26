@@ -14,35 +14,51 @@
 </head>
 
 <body>
-    <div id="content">
-        <header>
-            <h1>Tic-Tac-Toe</h1>
-            <h2>Round: <strong id="round">0</strong></h2>
-            <h3>Player 'X' score: <strong id="player-X-score">0</strong><br>
-                Player 'O' score: <strong id="player-O-score">0</strong>
-            </h3>
-        </header>
-        <div id="message"></div>
-        <div id="gameboard">
-            <div class="cell border-r border-d" data-row="0" data-col="0"></div>
-            <div class="cell border-r border-d" data-row="0" data-col="1"></div>
-            <div class="cell border-d" data-row="0" data-col="2"></div>
-            <div class="cell border-r border-d" data-row="1" data-col="0"></div>
-            <div class="cell border-r border-d" data-row="1" data-col="1"></div>
-            <div class="cell border-d" data-row="1" data-col="2"></div>
-            <div class="cell border-r" data-row="2" data-col="0"></div>
-            <div class="cell border-r" data-row="2" data-col="1"></div>
-            <div class="cell" data-row="2" data-col="2"></div>
+    <div id="intro-UI">
+        <h1>Tic-Tac-Toe</h1>
+        <h2>Game Mode</h2>
+        <div id="game-mode-selector">
+            <button id="ai-mode"><i class="fa-solid fa-computer fa-5x"></i></button>
+            <button id="human-mode"><i class="fa-solid fa-user fa-5x"></i></button>
         </div>
-        <div id="game-buttons">
-            <button id="new-round" class="btn btn-dark">New Round</button>
-            <button id="new-game" class="btn btn-dark">New Game</button>
+        <h2>Your Symbol</h2>
+        <div id="symbol-selector">
+            <button id="choose-X"><i class="fa-solid fa-x fa-3x"></i></button>
+            <button id="choose-O"><i class="fa-solid fa-o fa-3x"></i></button>
         </div>
+        <button id="finish-intro-btn">START</button>
     </div>
-    <footer id="footer">
-        <a href="https://github.com/vwainman" target="_blank">
-            <i class="fab fa-github"></i></a>
-    </footer>
+    <div id="game-UI" class="hidden">
+        <div id="content">
+            <header>
+                <h1>Tic-Tac-Toe</h1>
+                <h2>Round: <strong id="round">0</strong></h2>
+                <h3>Player 'X' score: <strong id="player-X-score">0</strong><br>
+                    Player 'O' score: <strong id="player-O-score">0</strong>
+                </h3>
+            </header>
+            <div id="message"></div>
+            <div id="gameboard">
+                <div class="cell border-r border-d" data-row="0" data-col="0"></div>
+                <div class="cell border-r border-d" data-row="0" data-col="1"></div>
+                <div class="cell border-d" data-row="0" data-col="2"></div>
+                <div class="cell border-r border-d" data-row="1" data-col="0"></div>
+                <div class="cell border-r border-d" data-row="1" data-col="1"></div>
+                <div class="cell border-d" data-row="1" data-col="2"></div>
+                <div class="cell border-r" data-row="2" data-col="0"></div>
+                <div class="cell border-r" data-row="2" data-col="1"></div>
+                <div class="cell" data-row="2" data-col="2"></div>
+            </div>
+            <div id="game-buttons">
+                <button id="new-round" class="btn btn-dark">New Round</button>
+                <button id="new-game" class="btn btn-dark">New Game</button>
+            </div>
+        </div>
+        <footer id="footer">
+            <a href="https://github.com/vwainman" target="_blank">
+                <i class="fab fa-github"></i></a>
+        </footer>
+    </div>
 </body>
 
 </html>
