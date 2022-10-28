@@ -46,8 +46,8 @@ const gameBoard = (() => {
         ["", "", ""],
         ["", "", ""]
     ];
-    const N_COLS = STARTING_CONFIGURATION.length;
-    const N_ROWS = STARTING_CONFIGURATION[0].length;
+    const N_COLS = STARTING_CONFIGURATION[0].length;
+    const N_ROWS = STARTING_CONFIGURATION.length;
     // pass by value
     let board = STARTING_CONFIGURATION.map((arr) => {
         return arr.slice();
