@@ -72,7 +72,6 @@ const gameBoard = (() => {
 
     const getWinner = () => { return winner; }
 
-    // retrieve the board
     const getBoard = () => { return board; };
 
     // log the board
@@ -317,6 +316,7 @@ const introController = (() => {
         gameUIDiv.classList.add("hidden");
     }
 
+    // get an adjacent html sibling, assuming there are only two siblings.
     const getAdjacentSibling = (e) => {
         const el = e.target;
         let prevSibling = el.previousElementSibling;
@@ -331,6 +331,7 @@ const introController = (() => {
         throw new Error("There are no adjacent siblings")
     }
 
+    // highlight and unhighlight adjacent buttons for each mode
     const highlightSelected = (e) => {
         e.target.classList.toggle("selected");
         const adjacentSibling = getAdjacentSibling(e);
@@ -341,6 +342,7 @@ const introController = (() => {
         updateSelection(e.target.parentElement, e.target);
     }
 
+    // retrieve player's clicked mode settings
     const updateSelection = (selectorTypeEle, selectedEle) => {
         if (selectorTypeEle.id === "game-mode-selector") {
             chosenGameMode = selectedEle.id;
@@ -351,6 +353,7 @@ const introController = (() => {
         }
     }
 
+    // move to the game element of the UI
     const endIntroDisplay = () => {
         if (chosenGameMode && chosenSymbol) {
             introUIDiv.classList.toggle("hidden");
@@ -389,6 +392,7 @@ const gameController = (() => {
         })
     );
 
+    // keep the game moving if the board state is in play
     const moveGameForward = (lastPlayer) => {
         gameBoard.updateBoardState(lastPlayer)
         if (gameBoard.getBoardState() !== "inplay") {
@@ -398,6 +402,7 @@ const gameController = (() => {
         }
     }
 
+    // at the end of each round, update round and player statistics
     const endRound = (lastPlayer) => {
         if (gameBoard.getBoardState() === "won") {
             lastPlayer.addWin();
@@ -406,6 +411,7 @@ const gameController = (() => {
         }
     }
 
+    // Update display and open the floor to the player or AI to make a move
     const nextTurn = (firstTurn = false) => {
         if (!firstTurn) {
             currentPlayer = (currentPlayer === playerX) ? playerO : playerX;
@@ -418,6 +424,8 @@ const gameController = (() => {
         }
     }
 
+    // Start a new round by randomly deciding who goes first, resetting the board, display and players
+    // as well as updating the number of rounds played and display for whose turn it is and the current round number.
     const newRound = () => {
         currentPlayer = players[Math.round(Math.random())];
         gameBoard.reset();
@@ -432,6 +440,8 @@ const gameController = (() => {
         }
     }
 
+    // Get the AI's current play based on minimax. The board is saved and reloaded since it will
+    // be modified in miniMax
     const getComputerPlay = () => {
         gameBoard.saveBoardState();
         const bestMoveCoord = miniMax(gameBoard, currentPlayer);
@@ -439,6 +449,7 @@ const gameController = (() => {
         return bestMoveCoord["coord"];
     }
 
+    // begin a new game by resetting players, board and the display, and then beginning a new round
     const newGame = (playerSymbol, gameMode) => {
         playerO.resetAll();
         playerX.resetAll();
@@ -450,6 +461,7 @@ const gameController = (() => {
         newRound();
     }
 
+    // change player configurations based on new settings
     const updatePlayerSettings = (playerSymbol, gameMode) => {
         if (gameMode === "ai-mode") {
             if (playerSymbol === "X") {
@@ -467,6 +479,7 @@ const gameController = (() => {
         }
     }
 
+    // get the player based on the type requested, assuming there can only be one AI
     const getPlayer = (type) => {
         if ((playerX.getIsHuman() && type === "human")
             || !playerX.getIsHuman() && type === "ai") {
@@ -476,14 +489,21 @@ const gameController = (() => {
         }
     }
 
-    // miniMax algorithm
+    /**
+     * Retrieves the best possible move for the AI
+     * @param {Board} simBoard
+     * @param {Player} player
+     * @return {"score": Number,
+     *          "coord": {"x": Number, "y": Number}}
+     */
     const miniMax = (simBoard, player) => {
+        const BASE_SCORE = 10;
         let availCoords = simBoard.getPossibleMoves();
         let possibleWinner = simBoard.getWinner();
         if (possibleWinner && possibleWinner.getIsHuman()) {
-            return { "score": -10 };
+            return { "score": -BASE_SCORE };
         } else if (possibleWinner && !possibleWinner.getIsHuman()) {
-            return { "score": 10 };
+            return { "score": BASE_SCORE };
         } else if (simBoard.getBoardState() === "tied") {
             return { "score": 0 };
         }
@@ -505,19 +525,32 @@ const gameController = (() => {
             moves.push(move);
         }
 
+        const playerIsAI = !player.getIsHuman();
+        return getBestWorseMove(moves, playerIsAI);
+    }
+
+    /**
+     * Based on the list of available moves, return the best or worse
+     * @param {Array} moves // all possible moves with scores and coordinates
+     * @param {Boolean} isBestMove
+     * @return {"score": Number,
+     *          "coord": {"x": Number, "y": Number}} // the best or worse move
+     */
+    const getBestWorseMove = (moves, isBestMove) => {
+        const BASE_SCORE = 10;
         let bestMove = null;
-        if (!player.getIsHuman()) {
-            let bestScore = -10000;
+        if (isBestMove) {
+            let bestScore = -BASE_SCORE;
             for (const move of moves) {
-                if (move["score"] > bestScore) {
+                if (move["score"] >= bestScore) {
                     bestScore = move["score"];
                     bestMove = move;
                 }
             }
         } else {
-            let bestScore = 10000;
+            let bestScore = BASE_SCORE;
             for (const move of moves) {
-                if (move["score"] < bestScore) {
+                if (move["score"] <= bestScore) {
                     bestScore = move["score"];
                     bestMove = move;
                 }
